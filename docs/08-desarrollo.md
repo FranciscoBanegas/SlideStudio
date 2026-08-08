@@ -7,7 +7,9 @@ Guía para ejecutar, depurar y ampliar Slide Studio.
 - [uv](https://docs.astral.sh/uv/) (gestor de entornos/dependencias).
 - Python 3.10+ (uv puede instalarlo: `uv python install 3.12`).
 - Dependencias declaradas en `backend/pyproject.toml`:
-  `fastapi`, `uvicorn[standard]`, `pydantic>=2`, `python-multipart`, `pywebview`.
+  `fastapi`, `uvicorn[standard]`, `pydantic>=2`, `python-multipart`, y para la
+  ventana de escritorio `pywebview` + `pyside6` + `qtpy` (backend Qt
+  autocontenido y multiplataforma).
 
 ```bash
 cd slide-studio/backend
