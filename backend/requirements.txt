@@ -1,0 +1,10 @@
+# Método recomendado: uv (ver pyproject.toml)
+#   uv sync && uv run python run.py
+#
+# Este archivo se mantiene solo como alternativa para quien use pip:
+#   pip install -r requirements.txt
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+python-multipart>=0.0.9
+pywebview>=4.4

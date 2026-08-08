@@ -1,0 +1,9 @@
+# Entorno uv
+backend/.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Datos locales de proyectos del usuario (descomenta si no quieres versionarlos)
+# projects/

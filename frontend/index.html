@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slide Studio</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/slide-theme.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ── Toolbar ── -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">▧ Slide Studio</span>
+      <span class="proj-name" id="proj-name">—</span>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="toolgroup">
+      <div class="menu" id="insert-menu">
+        <button class="btn" id="insert-btn">+ Insertar ▾</button>
+        <div class="menu-pop">
+          <button class="menu-item" data-insert="text"><span class="ic">T</span> Texto</button>
+          <button class="menu-item" data-insert="title"><span class="ic">H</span> Título</button>
+          <button class="menu-item" data-insert="subtitle"><span class="ic">h</span> Subtítulo</button>
+          <button class="menu-item" data-insert="image"><span class="ic">▦</span> Imagen…</button>
+          <button class="menu-item" data-insert="rect"><span class="ic">▭</span> Rectángulo</button>
+          <button class="menu-item" data-insert="line"><span class="ic">—</span> Línea</button>
+          <button class="menu-item" data-insert="background"><span class="ic">◧</span> Fondo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolgroup">
+      <button class="btn ghost icon" id="btn-undo" title="Deshacer (Ctrl+Z)">↶</button>
+      <button class="btn ghost icon" id="btn-redo" title="Rehacer (Ctrl+Y)">↷</button>
+    </div>
+
+    <div class="toolgroup">
+      <select id="project-select" title="Proyecto abierto"></select>
+      <button class="btn ghost" id="btn-new-project" title="Nuevo proyecto">Nuevo</button>
+      <button class="btn ghost" id="btn-duplicate-project" title="Duplicar esta presentación">Duplicar</button>
+      <button class="btn ghost danger" id="btn-delete-project" title="Eliminar esta presentación">Eliminar</button>
+    </div>
+
+    <div class="toolgroup">
+      <button class="btn" id="btn-save">Guardar <span class="kbd">⌘S</span></button>
+      <button class="btn primary" id="btn-present">▶ Presentar</button>
+    </div>
+  </header>
+
+  <!-- ── Rail izquierdo: slides ── -->
+  <aside class="rail">
+    <div class="rail-head">
+      <span>Slides</span>
+      <span id="slide-count">0</span>
+    </div>
+    <div class="rail-list" id="rail-list"></div>
+    <div class="rail-foot">
+      <button class="btn" id="btn-add-slide">+ Nuevo slide</button>
+    </div>
+  </aside>
+
+  <!-- ── Canvas central ── -->
+  <main class="stage" id="stage">
+    <div class="canvas-wrap" id="canvas-wrap">
+      <div class="canvas-scaler" id="canvas-scaler">
+        <div class="ss-slide" id="slide-canvas"></div>
+      </div>
+    </div>
+    <div class="canvas-zoombar" id="zoombar">
+      <button class="btn ghost icon" id="zoom-out">−</button>
+      <span id="zoom-label">100%</span>
+      <button class="btn ghost icon" id="zoom-in">+</button>
+      <button class="btn ghost icon" id="zoom-fit" title="Ajustar">⤢</button>
+    </div>
+  </main>
+
+  <!-- ── Panel derecho: propiedades ── -->
+  <aside class="props">
+    <div class="props-head">
+      <span>Propiedades</span>
+      <span class="el-type-badge" id="el-type-badge" style="display:none"></span>
+    </div>
+    <div class="props-body" id="props-body">
+      <div class="prop-empty">Selecciona un elemento en el canvas para editar sus propiedades, o usa <strong>+ Insertar</strong> para añadir uno.</div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- Modo presentación -->
+<div class="present-root" id="present-root">
+  <div class="present-stage" id="present-stage">
+    <div class="ss-slide" id="present-canvas"></div>
+  </div>
+  <div class="present-hint">← → / Espacio para navegar · ESC para salir</div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<input type="file" id="file-input" accept="image/*" style="display:none">
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

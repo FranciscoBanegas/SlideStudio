@@ -1,0 +1,722 @@
+{
+  "id": "proj-e258dcfc",
+  "schemaVersion": 1,
+  "name": "Tutorial · Deshabilitar login de root",
+  "width": 1920,
+  "height": 1080,
+  "theme": {
+    "fontSans": "'IBM Plex Sans', sans-serif",
+    "fontMono": "'IBM Plex Mono', monospace",
+    "colors": {
+      "bg": "#0e1116",
+      "panel": "#171b22",
+      "code": "#0a0c10",
+      "line": "rgba(255,255,255,.08)",
+      "line2": "rgba(255,255,255,.14)",
+      "ink": "#e7eaf0",
+      "muted": "#96a0b0",
+      "dim": "#69727f",
+      "green": "#5cd48a",
+      "amber": "#e6b95c",
+      "red": "#e0776b",
+      "blue": "#7fb4e8"
+    },
+    "typeScale": {
+      "title": 60,
+      "step": 28,
+      "sub": 40,
+      "body": 30,
+      "code": 27,
+      "small": 24,
+      "mega": 150
+    },
+    "fontsHref": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+  },
+  "defaultTransition": {
+    "type": "fade",
+    "duration": 0.5,
+    "easing": "ease"
+  },
+  "slides": [
+    {
+      "id": "slide-b4c2478a",
+      "name": "Portada",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Presenta el objetivo del tutorial: convertir root en una cuenta que no puede iniciar sesión y trabajar siempre con un usuario administrador auditado.",
+      "elements": [
+        {
+          "id": "el-af6b5598",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Portada\" data-speaker-notes=\"Presenta el objetivo del tutorial: convertir root en una cuenta que no puede iniciar sesión y trabajar siempre con un usuario administrador auditado.\" class=\"sd\" style=\"justify-content:center;\">\n    <div style=\"font-family:'IBM Plex Mono',monospace;font-size:26px;color:var(--green);letter-spacing:2px;margin-bottom:30px;\">root@servidor:~# hardening --guia-paso-a-paso</div>\n    <h2 style=\"font-size:88px;max-width:1500px;\">Deshabilitar el inicio de sesión de root</h2>\n    <div style=\"font-size:var(--type-sub);color:var(--muted);margin-top:24px;font-weight:400;\">y utilizar un usuario administrador</div>\n    <div style=\"display:flex;gap:16px;margin-top:56px;\">\n      <span class=\"mono\" style=\"border:1px solid var(--line2);border-radius:999px;padding:12px 26px;font-size:var(--type-small);color:var(--ink);\">12 pasos</span>\n      <span class=\"mono\" style=\"border:1px solid var(--line2);border-radius:999px;padding:12px 26px;font-size:var(--type-small);color:var(--ink);\">Debian · Ubuntu · RHEL</span>\n      <span class=\"mono\" style=\"border:1px solid var(--line2);border-radius:999px;padding:12px 26px;font-size:var(--type-small);color:var(--ink);\">Nivel intermedio</span>\n    </div>\n    <div class=\"dot\">01</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-3a84f4eb",
+      "name": "Nota importante",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Aclara las expectativas antes de empezar: esto reduce la superficie de ataque, pero no cambia el modelo de seguridad de Linux. Un atacante con UID 0 real sigue teniendo control total.",
+      "elements": [
+        {
+          "id": "el-3987249e",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Nota importante\" data-speaker-notes=\"Aclara las expectativas antes de empezar: esto reduce la superficie de ataque, pero no cambia el modelo de seguridad de Linux. Un atacante con UID 0 real sigue teniendo control total.\" class=\"sd\" style=\"justify-content:center;\">\n    <div class=\"steplabel\" style=\"color:var(--red);margin-bottom:var(--gap-title);\">⚠ ANTES DE EMPEZAR</div>\n    <h2 style=\"max-width:1560px;\">Esto reduce el riesgo, no cambia el modelo de seguridad</h2>\n    <p style=\"font-size:var(--type-body);color:var(--muted);max-width:1500px;line-height:1.5;margin:36px 0 0;text-wrap:pretty;\">\n      Deshabilitar el login de <span class=\"mono\" style=\"color:var(--ink);\">root</span> <strong style=\"color:var(--ink);\">no impide</strong> que un atacante que obtenga privilegios <span class=\"mono\" style=\"color:var(--ink);\">UID 0</span> tenga control total del sistema. Esta guía reduce significativamente la superficie de ataque, pero el modelo de permisos de Linux permanece intacto.\n    </p>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">02</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-150ff7e2",
+      "name": "Objetivo",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Cuatro metas concretas. Root existe porque Linux lo necesita, pero no podrá iniciar sesión; toda tarea administrativa pasa por un usuario auditado.",
+      "elements": [
+        {
+          "id": "el-87d698a4",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Objetivo\" data-speaker-notes=\"Cuatro metas concretas. Root existe porque Linux lo necesita, pero no podrá iniciar sesión; toda tarea administrativa pasa por un usuario auditado.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:20px;\">OBJETIVO</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Qué buscamos conseguir</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1560px;\">\n      <div style=\"display:flex;gap:20px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 30px;\">\n        <span class=\"mono\" style=\"color:var(--green);font-size:34px;line-height:1;\">✓</span>\n        <span style=\"font-size:var(--type-body);line-height:1.4;\">Root <strong>existirá</strong> porque Linux lo necesita</span>\n      </div>\n      <div style=\"display:flex;gap:20px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 30px;\">\n        <span class=\"mono\" style=\"color:var(--green);font-size:34px;line-height:1;\">✓</span>\n        <span style=\"font-size:var(--type-body);line-height:1.4;\">Root <strong>no podrá</strong> iniciar sesión</span>\n      </div>\n      <div style=\"display:flex;gap:20px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 30px;\">\n        <span class=\"mono\" style=\"color:var(--green);font-size:34px;line-height:1;\">✓</span>\n        <span style=\"font-size:var(--type-body);line-height:1.4;\">La administración pasa por un <strong>usuario administrador</strong></span>\n      </div>\n      <div style=\"display:flex;gap:20px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 30px;\">\n        <span class=\"mono\" style=\"color:var(--green);font-size:34px;line-height:1;\">✓</span>\n        <span style=\"font-size:var(--type-body);line-height:1.4;\">Se <strong>reduce</strong> la superficie de ataque</span>\n      </div>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">03</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-32bc824a",
+      "name": "Paso 1",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Creamos el usuario y lo añadimos al grupo de administración: sudo en Debian/Ubuntu, wheel en RHEL/CentOS. id confirma la pertenencia.",
+      "elements": [
+        {
+          "id": "el-8a32e031",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 1\" data-speaker-notes=\"Creamos el usuario y lo añadimos al grupo de administración: sudo en Debian/Ubuntu, wheel en RHEL/CentOS. id confirma la pertenencia.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 01</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Crear el usuario administrador</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1620px;align-items:start;\">\n      <div>\n        <div class=\"cap\">CREAR EL USUARIO</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> adduser administrador</div>\n      </div>\n      <div>\n        <div class=\"cap\">COMPROBAR</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> id administrador</div>\n      </div>\n      <div>\n        <div class=\"cap\">DEBIAN / UBUNTU</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> usermod -aG <span style=\"color:var(--amber);\">sudo</span> administrador</div>\n      </div>\n      <div>\n        <div class=\"cap\">RHEL / CENTOS</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> usermod -aG <span style=\"color:var(--amber);\">wheel</span> administrador</div>\n      </div>\n    </div>\n    <p style=\"font-size:var(--type-small);color:var(--muted);margin-top:28px;\">En la salida de <span class=\"mono\" style=\"color:var(--ink);\">id</span> debe aparecer <span class=\"mono\" style=\"color:var(--amber);\">sudo</span> o <span class=\"mono\" style=\"color:var(--amber);\">wheel</span>.</p>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">04</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-d53c04fc",
+      "name": "Paso 2",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Verificamos que el usuario puede elevar privilegios. sudo whoami debe devolver root.",
+      "elements": [
+        {
+          "id": "el-e39390c8",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 2\" data-speaker-notes=\"Verificamos que el usuario puede elevar privilegios. sudo whoami debe devolver root.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 02</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Probar sudo</h2>\n    <div style=\"max-width:1200px;\">\n      <div class=\"cap\">CAMBIAR AL USUARIO Y ELEVAR PRIVILEGIOS</div>\n      <div class=\"cmd\" style=\"line-height:1.8;\">\n        <span style=\"color:var(--green);\">$</span> su - administrador<br>\n        <span style=\"color:var(--green);\">$</span> sudo whoami\n      </div>\n    </div>\n    <div style=\"max-width:1200px;margin-top:34px;\">\n      <div class=\"cap\" style=\"color:var(--green);\">DEBE DEVOLVER</div>\n      <div class=\"cmd\" style=\"border-color:rgba(92,212,138,.35);color:var(--green);\">root</div>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">05</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-d9915b00",
+      "name": "Paso 3",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Bloqueamos la contraseña de root con passwd -l. El estado L en passwd -S confirma que está Locked.",
+      "elements": [
+        {
+          "id": "el-3315c77c",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 3\" data-speaker-notes=\"Bloqueamos la contraseña de root con passwd -l. El estado L en passwd -S confirma que está Locked.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 03</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Bloquear la contraseña de root</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1620px;align-items:start;\">\n      <div>\n        <div class=\"cap\">BLOQUEAR</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> passwd -l root</div>\n      </div>\n      <div>\n        <div class=\"cap\">VERIFICAR</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> passwd -S root</div>\n      </div>\n    </div>\n    <div style=\"max-width:1200px;margin-top:34px;\">\n      <div class=\"cap\" style=\"color:var(--green);\">SALIDA ESPERADA</div>\n      <div class=\"cmd\" style=\"border-color:rgba(92,212,138,.35);\">root <span style=\"color:var(--amber);\">L</span></div>\n    </div>\n    <p style=\"font-size:var(--type-small);color:var(--muted);margin-top:24px;\">La <span class=\"mono\" style=\"color:var(--amber);\">L</span> significa <strong style=\"color:var(--ink);\">Locked</strong> (bloqueada).</p>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">06</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-d021081c",
+      "name": "Paso 4",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Cambiamos el shell de root a nologin para que ningún intento de sesión interactiva prospere. Verificamos leyendo /etc/passwd.",
+      "elements": [
+        {
+          "id": "el-96f854ba",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 4\" data-speaker-notes=\"Cambiamos el shell de root a nologin para que ningún intento de sesión interactiva prospere. Verificamos leyendo /etc/passwd.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 04</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Cambiar el shell de root</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1620px;align-items:start;\">\n      <div>\n        <div class=\"cap\">VER EL SHELL ACTUAL</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> grep \"^root:\" /etc/passwd</div>\n      </div>\n      <div>\n        <div class=\"cap\">CAMBIAR A NOLOGIN</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> usermod -s /usr/sbin/nologin root</div>\n      </div>\n    </div>\n    <div style=\"max-width:1200px;margin-top:34px;\">\n      <div class=\"cap\" style=\"color:var(--green);\">LA LÍNEA DEBE TERMINAR EN</div>\n      <div class=\"cmd\" style=\"border-color:rgba(92,212,138,.35);color:var(--green);\">/usr/sbin/nologin</div>\n    </div>\n    <p style=\"font-size:var(--type-small);color:var(--muted);margin-top:24px;\">En algunos sistemas la ruta es <span class=\"mono\" style=\"color:var(--ink);\">/sbin/nologin</span>.</p>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">07</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-e743a225",
+      "name": "Paso 5",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Comprobamos el resultado: al intentar su - o su root, el sistema responde que la cuenta no está disponible.",
+      "elements": [
+        {
+          "id": "el-5355831a",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 5\" data-speaker-notes=\"Comprobamos el resultado: al intentar su - o su root, el sistema responde que la cuenta no está disponible.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 05</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Probar el bloqueo</h2>\n    <div style=\"max-width:1200px;\">\n      <div class=\"cap\">INTENTAR ACCEDER COMO ROOT</div>\n      <div class=\"cmd\" style=\"line-height:1.8;\">\n        <span style=\"color:var(--green);\">$</span> su -<br>\n        <span style=\"color:var(--dim);\"># o bien</span><br>\n        <span style=\"color:var(--green);\">$</span> su root\n      </div>\n    </div>\n    <div style=\"max-width:1200px;margin-top:34px;\">\n      <div class=\"cap\" style=\"color:var(--red);\">DEBE RESPONDER</div>\n      <div class=\"cmd\" style=\"border-color:rgba(224,119,107,.4);color:var(--red);\">This account is currently not available.</div>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">08</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-3e5497ce",
+      "name": "Paso 6",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Deshabilitamos el acceso remoto de root editando sshd_config con PermitRootLogin no, y reiniciamos el servicio SSH.",
+      "elements": [
+        {
+          "id": "el-1304e246",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 6\" data-speaker-notes=\"Deshabilitamos el acceso remoto de root editando sshd_config con PermitRootLogin no, y reiniciamos el servicio SSH.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 06</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Deshabilitar root por SSH</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1620px;align-items:start;\">\n      <div>\n        <div class=\"cap\">EDITAR LA CONFIGURACIÓN</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> nano /etc/ssh/sshd_config</div>\n      </div>\n      <div>\n        <div class=\"cap\">REINICIAR EL SERVICIO</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> systemctl restart ssh</div>\n      </div>\n    </div>\n    <div style=\"max-width:1200px;margin-top:34px;\">\n      <div class=\"cap\" style=\"color:var(--amber);\">CONFIGURAR ESTA DIRECTIVA</div>\n      <div class=\"cmd\" style=\"border-color:rgba(230,185,92,.35);\"><span style=\"color:var(--blue);\">PermitRootLogin</span> <span style=\"color:var(--amber);\">no</span></div>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">09</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-c542539d",
+      "name": "Paso 7",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Configuramos sudo con visudo. Podemos dar permisos completos o limitarlos a comandos concretos, aplicando mínimo privilegio.",
+      "elements": [
+        {
+          "id": "el-8c0f74ca",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 7\" data-speaker-notes=\"Configuramos sudo con visudo. Podemos dar permisos completos o limitarlos a comandos concretos, aplicando mínimo privilegio.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 07</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Configurar sudo</h2>\n    <div style=\"max-width:1200px;margin-bottom:32px;\">\n      <div class=\"cap\">EDITAR DE FORMA SEGURA</div>\n      <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> visudo</div>\n    </div>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1620px;align-items:start;\">\n      <div>\n        <div class=\"cap\" style=\"color:var(--green);\">PERMISOS COMPLETOS</div>\n        <div class=\"cmd\"><span style=\"color:var(--ink);\">administrador</span> <span style=\"color:var(--amber);\">ALL=(ALL:ALL) ALL</span></div>\n      </div>\n      <div>\n        <div class=\"cap\" style=\"color:var(--blue);\">PERMISOS LIMITADOS</div>\n        <div class=\"cmd\"><span style=\"color:var(--ink);\">administrador</span> <span style=\"color:var(--amber);\">ALL=(ALL)</span> /usr/bin/systemctl</div>\n      </div>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">10</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-9d5c0de3",
+      "name": "Paso 8",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Instalamos y activamos auditd para registrar las acciones administrativas y ganar trazabilidad.",
+      "elements": [
+        {
+          "id": "el-9446a436",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 8\" data-speaker-notes=\"Instalamos y activamos auditd para registrar las acciones administrativas y ganar trazabilidad.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 08</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Registrar acciones administrativas</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1620px;align-items:start;\">\n      <div>\n        <div class=\"cap\">DEBIAN / UBUNTU</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> apt install auditd</div>\n      </div>\n      <div>\n        <div class=\"cap\">RHEL / CENTOS</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> dnf install audit</div>\n      </div>\n    </div>\n    <div style=\"max-width:1200px;margin-top:34px;\">\n      <div class=\"cap\">HABILITAR E INICIAR</div>\n      <div class=\"cmd\" style=\"line-height:1.8;\">\n        <span style=\"color:var(--green);\">$</span> systemctl enable auditd<br>\n        <span style=\"color:var(--green);\">$</span> systemctl start auditd\n      </div>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">11</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-8e0c1c54",
+      "name": "Paso 9",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Protegemos el gestor de arranque generando una contraseña con grub-mkpasswd-pbkdf2 y aplicándola con update-grub.",
+      "elements": [
+        {
+          "id": "el-12cf3024",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 9\" data-speaker-notes=\"Protegemos el gestor de arranque generando una contraseña con grub-mkpasswd-pbkdf2 y aplicándola con update-grub.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASO 09</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Proteger GRUB</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:26px 40px;max-width:1620px;align-items:start;\">\n      <div>\n        <div class=\"cap\">GENERAR CONTRASEÑA</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> grub-mkpasswd-pbkdf2</div>\n      </div>\n      <div>\n        <div class=\"cap\">APLICAR CAMBIOS</div>\n        <div class=\"cmd\"><span style=\"color:var(--green);\">$</span> update-grub</div>\n      </div>\n    </div>\n    <p style=\"font-size:var(--type-body);color:var(--muted);margin-top:36px;max-width:1400px;line-height:1.5;text-wrap:pretty;\">Impide editar los parámetros de arranque para saltarse las restricciones del sistema.</p>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">12</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-4abea8ed",
+      "name": "Pasos 10-11",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Protección física del arranque: contraseña de BIOS/UEFI, restringir medios de arranque y activar Secure Boot cuando el hardware lo permita.",
+      "elements": [
+        {
+          "id": "el-36ec3424",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Pasos 10-11\" data-speaker-notes=\"Protección física del arranque: contraseña de BIOS/UEFI, restringir medios de arranque y activar Secure Boot cuando el hardware lo permita.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:16px;\">PASOS 10 · 11</div>\n    <h2 style=\"margin-bottom:var(--gap-title);\">Proteger BIOS/UEFI y Secure Boot</h2>\n    <div style=\"display:grid;grid-template-columns:1.3fr 1fr;gap:40px;max-width:1620px;align-items:start;\">\n      <div style=\"background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:34px 36px;\">\n        <div class=\"steplabel\" style=\"font-size:var(--type-small);margin-bottom:20px;\">PASO 10 · BIOS / UEFI</div>\n        <ul style=\"margin:0;padding-left:26px;font-size:var(--type-body);line-height:1.65;color:var(--ink);\">\n          <li>Configurar contraseña</li>\n          <li>Desactivar arranque por USB</li>\n          <li>Desactivar DVD</li>\n          <li>Desactivar PXE</li>\n          <li>Permitir sólo el disco del sistema</li>\n        </ul>\n      </div>\n      <div style=\"background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:34px 36px;\">\n        <div class=\"steplabel\" style=\"font-size:var(--type-small);margin-bottom:20px;color:var(--green);\">PASO 11 · SECURE BOOT</div>\n        <p style=\"margin:0;font-size:var(--type-body);line-height:1.55;color:var(--ink);text-wrap:pretty;\">Actívalo si el hardware lo soporta. Garantiza que sólo se ejecute código de arranque firmado y de confianza.</p>\n      </div>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">13</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-2e85534e",
+      "name": "Paso 12",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Cifrado de disco con LUKS: protege el contenido frente al robo o manipulación física del disco.",
+      "elements": [
+        {
+          "id": "el-cdee7179",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Paso 12\" data-speaker-notes=\"Cifrado de disco con LUKS: protege el contenido frente al robo o manipulación física del disco.\" class=\"sd\" style=\"justify-content:center;\">\n    <div class=\"steplabel\" style=\"margin-bottom:20px;color:var(--green);\">PASO 12</div>\n    <h2 style=\"max-width:1400px;\">Cifrar el disco con LUKS</h2>\n    <p style=\"font-size:var(--type-sub);color:var(--muted);margin-top:30px;max-width:1400px;line-height:1.4;font-weight:400;text-wrap:pretty;\">Protege el contenido del disco frente al <strong style=\"color:var(--ink);\">robo</strong> o la <strong style=\"color:var(--ink);\">manipulación física</strong>.</p>\n    <div class=\"cmd mono\" style=\"display:inline-block;margin-top:44px;color:var(--green);border-color:rgba(92,212,138,.3);\">LUKS · Linux Unified Key Setup</div>\n    <div class=\"dot\">14</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-855fa4bf",
+      "name": "Límite",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "El punto clave: en Linux tradicional, root con UID 0 puede modificar cualquier archivo. Para proteger activos críticos se requieren mecanismos adicionales de integridad y hardware de confianza.",
+      "elements": [
+        {
+          "id": "el-8ad5d395",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Límite\" data-speaker-notes=\"El punto clave: en Linux tradicional, root con UID 0 puede modificar cualquier archivo. Para proteger activos críticos se requieren mecanismos adicionales de integridad y hardware de confianza.\" class=\"sd\">\n    <div class=\"steplabel\" style=\"margin-bottom:20px;color:var(--red);\">EL LÍMITE</div>\n    <h2 style=\"margin-bottom:26px;max-width:1560px;\">¿Se puede impedir que root modifique un archivo?</h2>\n    <p style=\"font-size:var(--type-body);color:var(--muted);max-width:1500px;line-height:1.5;margin:0 0 var(--gap-title);text-wrap:pretty;\"><strong style=\"color:var(--red);\">No en un Linux tradicional.</strong> El usuario con <span class=\"mono\" style=\"color:var(--ink);\">UID 0</span> puede modificar cualquier archivo del sistema. Para proteger información crítica hacen falta mecanismos adicionales:</p>\n    <div style=\"display:flex;flex-wrap:wrap;gap:16px;max-width:1560px;\">\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">TPM</span>\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">Secure Boot</span>\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">LUKS</span>\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">SELinux</span>\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">AppArmor</span>\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">IMA / EVM</span>\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">HSM</span>\n      <span class=\"mono\" style=\"background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 26px;font-size:var(--type-small);\">Sistemas inmutables</span>\n    </div>\n    <div class=\"foot\">Hardening de root · Linux</div>\n    <div class=\"dot\">15</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-0553fd4f",
+      "name": "Comparativa",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Resumen del antes y el después. Recorre cada fila mostrando cómo cada control mueve el sistema de la columna izquierda a la derecha.",
+      "elements": [
+        {
+          "id": "el-dad4e4fe",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Comparativa\" data-speaker-notes=\"Resumen del antes y el después. Recorre cada fila mostrando cómo cada control mueve el sistema de la columna izquierda a la derecha.\" class=\"sd\" style=\"padding-top:70px;padding-bottom:60px;\">\n    <div class=\"steplabel\" style=\"margin-bottom:14px;\">RESULTADO</div>\n    <h2 style=\"margin-bottom:30px;\">Antes y después</h2>\n    <table class=\"mono\" style=\"width:100%;border-collapse:collapse;font-size:23px;\">\n      <thead>\n        <tr>\n          <th style=\"text-align:left;padding:12px 18px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line2);\">Aspecto</th>\n          <th style=\"text-align:left;padding:12px 18px;color:var(--red);font-weight:600;border-bottom:1px solid var(--line2);\">Sin esta configuración</th>\n          <th style=\"text-align:left;padding:12px 18px;color:var(--green);font-weight:600;border-bottom:1px solid var(--line2);\">Con esta configuración</th>\n        </tr>\n      </thead>\n      <tbody style=\"color:var(--ink);\">\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Login directo de root</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">Permitido</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Bloqueado (nologin)</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Acceso SSH de root</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">Posible</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Deshabilitado</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Administración diaria</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">Root</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Usuario con sudo</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Auditoría</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">Limitada</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Asociada al usuario</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Robo de credenciales de root</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">Alto</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Muy reducido</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Separación de responsabilidades</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">No</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Sí</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Protección del arranque</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">No</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">GRUB + BIOS/UEFI</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Robo del disco</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">No</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">LUKS</td></tr>\n        <tr><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Trazabilidad</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);color:var(--muted);\">Baja</td><td style=\"padding:10px 18px;border-bottom:1px solid var(--line);\">Alta</td></tr>\n        <tr><td style=\"padding:10px 18px;\">Superficie de ataque</td><td style=\"padding:10px 18px;color:var(--muted);\">Mayor</td><td style=\"padding:10px 18px;\">Menor</td></tr>\n      </tbody>\n    </table>\n    <div class=\"dot\">16</div>\n  </section>"
+        }
+      ]
+    },
+    {
+      "id": "slide-2e9479b4",
+      "name": "Conclusión",
+      "background": "var(--bg)",
+      "transitionIn": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "transitionOut": {
+        "type": "fade",
+        "duration": 0.5,
+        "easing": "ease"
+      },
+      "speakerNotes": "Cierre: esta configuración no elimina root ni cambia el funcionamiento interno de Linux, pero mejora sensiblemente la postura de seguridad. Recuerda la advertencia: contra un UID 0 real hacen falta mecanismos de integridad y hardware de confianza.",
+      "elements": [
+        {
+          "id": "el-d9ffdb40",
+          "type": "html",
+          "x": 0.0,
+          "y": 0.0,
+          "w": 1920.0,
+          "h": 1080.0,
+          "rotation": 0.0,
+          "opacity": 1.0,
+          "z": 0,
+          "locked": false,
+          "animation": {
+            "type": "fadeIn",
+            "applyTo": "element",
+            "duration": 0.55,
+            "delay": 0.0,
+            "stagger": 0.05,
+            "easing": "ease-out",
+            "direction": "in"
+          },
+          "markup": "<section data-label=\"Conclusión\" data-speaker-notes=\"Cierre: esta configuración no elimina root ni cambia el funcionamiento interno de Linux, pero mejora sensiblemente la postura de seguridad. Recuerda la advertencia: contra un UID 0 real hacen falta mecanismos de integridad y hardware de confianza.\" class=\"sd\" style=\"justify-content:center;\">\n    <div class=\"steplabel\" style=\"margin-bottom:22px;\">CONCLUSIÓN</div>\n    <h2 style=\"max-width:1560px;\">Una mejora real de seguridad, con límites claros</h2>\n    <div style=\"display:grid;grid-template-columns:1fr 1fr;gap:18px 40px;max-width:1500px;margin-top:40px;\">\n      <div style=\"display:flex;gap:16px;align-items:baseline;font-size:var(--type-body);\"><span class=\"mono\" style=\"color:var(--green);\">→</span><span>Reduce la exposición del sistema</span></div>\n      <div style=\"display:flex;gap:16px;align-items:baseline;font-size:var(--type-body);\"><span class=\"mono\" style=\"color:var(--green);\">→</span><span>Obliga a un usuario administrador auditado</span></div>\n      <div style=\"display:flex;gap:16px;align-items:baseline;font-size:var(--type-body);\"><span class=\"mono\" style=\"color:var(--green);\">→</span><span>Evita el login directo de root</span></div>\n      <div style=\"display:flex;gap:16px;align-items:baseline;font-size:var(--type-body);\"><span class=\"mono\" style=\"color:var(--green);\">→</span><span>Dificulta los ataques remotos</span></div>\n    </div>\n    <p style=\"font-size:var(--type-small);color:var(--muted);margin-top:44px;max-width:1500px;line-height:1.5;text-wrap:pretty;border-top:1px solid var(--line);padding-top:28px;\">Si un atacante obtiene privilegios reales de <span class=\"mono\" style=\"color:var(--red);\">UID 0</span>, tendrá control total. Para proteger activos críticos se requieren mecanismos adicionales de integridad y hardware de confianza.</p>\n    <div class=\"dot\">17</div>\n  </section>"
+        }
+      ]
+    }
+  ]
+}

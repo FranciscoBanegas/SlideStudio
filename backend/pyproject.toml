@@ -1,0 +1,18 @@
+[project]
+name = "slide-studio"
+version = "0.1.0"
+description = "Editor de presentaciones por slides (FastAPI + frontend vanilla)"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "pydantic>=2.6",
+    "python-multipart>=0.0.9",
+    "pywebview>=4.4",
+]
+
+# La app lee carpetas hermanas (frontend/, projects/) mediante rutas relativas a
+# __file__, por lo que NO se instala como paquete: uv gestiona solo el entorno y
+# las dependencias. Se ejecuta con `uv run python run.py`.
+[tool.uv]
+package = false

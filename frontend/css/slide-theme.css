@@ -1,0 +1,55 @@
+/* slide-theme.css — Sistema de diseño del deck original, copiado 1:1 desde
+   "Tutorial Deshabilitar Root.dc.html" para garantizar fidelidad visual.
+   Estas reglas SOLO aplican dentro del canvas del slide (.ss-slide), de modo
+   que no colisionan con el cromo del editor (app.css). */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+.ss-slide {
+  --bg:#0e1116; --panel:#171b22; --code:#0a0c10;
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --ink:#e7eaf0; --muted:#96a0b0; --dim:#69727f;
+  --green:#5cd48a; --amber:#e6b95c; --red:#e0776b; --blue:#7fb4e8;
+  --type-title:60px; --type-step:28px; --type-sub:40px; --type-body:30px;
+  --type-code:27px; --type-small:24px; --type-mega:150px;
+  --pad-x:110px; --pad-top:88px; --pad-bottom:78px;
+  --gap-title:34px; --gap-item:22px;
+}
+
+.ss-slide *{ box-sizing:border-box; }
+
+/* Componente base de slide del deck original. */
+.ss-slide .sd{
+  display:flex; flex-direction:column; height:100%; background:var(--bg); color:var(--ink);
+  font-family:'IBM Plex Sans',sans-serif; padding:var(--pad-top) var(--pad-x) var(--pad-bottom);
+  position:relative; overflow:hidden;
+}
+.ss-slide .sd h2{ margin:0; font-size:var(--type-title); font-weight:700; letter-spacing:-.5px; line-height:1.08; }
+.ss-slide .steplabel{
+  font-family:'IBM Plex Mono',monospace; font-size:var(--type-step); font-weight:600;
+  color:var(--amber); letter-spacing:3px;
+}
+.ss-slide .mono{ font-family:'IBM Plex Mono',monospace; }
+.ss-slide .cmd{
+  background:var(--code); border:1px solid var(--line); border-radius:12px;
+  padding:22px 28px; font-family:'IBM Plex Mono',monospace; font-size:var(--type-code);
+  line-height:1.55; color:var(--ink);
+}
+.ss-slide .cap{
+  font-family:'IBM Plex Mono',monospace; font-size:var(--type-small); color:var(--muted);
+  letter-spacing:1px; margin-bottom:12px;
+}
+.ss-slide .foot{
+  position:absolute; left:var(--pad-x); bottom:34px; font-family:'IBM Plex Mono',monospace;
+  font-size:20px; color:var(--dim); letter-spacing:1px;
+}
+.ss-slide .dot{
+  position:absolute; right:var(--pad-x); bottom:34px; font-family:'IBM Plex Mono',monospace;
+  font-size:20px; color:var(--dim); letter-spacing:1px;
+}
+
+/* Elementos nativos del editor (texto/imagen/formas) también viven dentro de
+   .ss-slide y comparten estos tokens. */
+.ss-el{ position:absolute; }
+.ss-el-text{ display:flex; }
+.ss-el-image{ display:block; }
