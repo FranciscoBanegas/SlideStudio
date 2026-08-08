@@ -67,3 +67,8 @@ guía de desarrollo/extensión.
 | Supr / Retroceso | Eliminar elemento |
 | Flechas (+Shift) | Mover elemento 1px (10px) |
 | ▶ Presentar · ← → Espacio · ESC | Presentación |
+
+## Licencia
+
+Distribuido bajo licencia [MIT](LICENSE). Uso libre, incluido comercial, citando
+la autoría.
