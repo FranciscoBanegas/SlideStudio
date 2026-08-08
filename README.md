@@ -46,11 +46,12 @@ abierto — un tipo nuevo = modelo en `models.py` + renderer en
 Implementado: editor de 3 paneles, CRUD/duplicar/reordenar slides, elementos
 (texto, título, imagen, rectángulo, línea, fondo, bloque HTML), edición visual
 con arrastre/redimensión, panel de propiedades, guardar/cargar, animaciones
-(incluida **letra por letra**) y modo presentación con transiciones.
+(incluida **letra por letra**), modo presentación con transiciones,
+duplicar/eliminar presentaciones y **exportación a PDF**.
 
-Pendiente (fases siguientes): timeline visual, transiciones avanzadas,
-exportación (HTML/PDF/imágenes/vídeo) — la lógica queda separada para
-incorporarse sin tocar el core.
+Pendiente (fases siguientes): timeline visual, transiciones avanzadas, y otros
+formatos de exportación (HTML/imágenes/vídeo) — la lógica queda separada
+(`frontend/js/export/`) para incorporarse sin tocar el core.
 
 ## Documentación
 

@@ -38,6 +38,7 @@ Al primer arranque se importa el deck original como proyecto de ejemplo.
 - **Fases 1–3 completas:** editor de 3 paneles, CRUD/duplicar/reordenar slides,
   elementos (texto, título, imagen, formas, fondo, bloque HTML), edición visual,
   guardar/cargar, animaciones (incl. letra por letra) y modo presentación.
-- **Pendiente (fases 4–6):** timeline visual, transiciones avanzadas y
-  exportación (HTML/PDF/imágenes/vídeo). La arquitectura ya deja estos puntos
-  desacoplados del núcleo.
+- **Exportación a PDF** disponible (botón ⤓ PDF → "Guardar como PDF").
+- **Pendiente (fases 4–6):** timeline visual, transiciones avanzadas y otros
+  formatos de exportación (HTML/imágenes/vídeo). La arquitectura ya deja estos
+  puntos desacoplados del núcleo (`frontend/js/export/`).

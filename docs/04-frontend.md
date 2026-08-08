@@ -26,7 +26,8 @@ frontend/
     │   ├── slidesPanel.js    Rail: crear/seleccionar/eliminar/duplicar/reordenar
     │   ├── propertiesPanel.js Panel derecho por tipo + animación
     │   └── toolbar.js        Insertar, guardar, proyectos, atajos, presentar
-    └── present/present.js    Reproducción fullscreen
+    ├── present/present.js    Reproducción fullscreen
+    └── export/pdf.js         Exportación a PDF (vía impresión del navegador)
 ```
 
 ## El store (patrón observer)

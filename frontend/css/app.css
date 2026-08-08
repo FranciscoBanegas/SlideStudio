@@ -257,3 +257,22 @@ select{ cursor:pointer; appearance:none;
 
 /* Overlay de carga / vacío */
 .overlay-center{ position:absolute; inset:0; display:grid; place-items:center; color:var(--ui-dim); font-size:14px; }
+
+/* ── Exportación a PDF (impresión) ── */
+#print-root{ display:none; }
+@media print{
+  /* Ocultar todo el editor; mostrar solo las páginas de impresión. */
+  .app, .present-root, .toasts, .canvas-zoombar{ display:none !important; }
+  #print-root{ display:block !important; }
+  html, body{ background:#fff; margin:0; padding:0; }
+  /* Página exactamente de la proporción del slide (16:9). */
+  @page{ size:1920px 1080px; margin:0; }
+  .print-slide{
+    position:relative !important; top:auto !important; left:auto !important;
+    width:1920px; height:1080px; overflow:hidden;
+    box-shadow:none !important; break-after:page; page-break-after:always;
+  }
+  .print-slide:last-child{ break-after:auto; page-break-after:auto; }
+  /* Forzar que los colores de fondo se impriman. */
+  *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+}

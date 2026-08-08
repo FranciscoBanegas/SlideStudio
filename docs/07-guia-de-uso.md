@@ -99,6 +99,16 @@ pantalla y ejecuta transiciones y animaciones.
 
 También puedes hacer clic: mitad derecha avanza, mitad izquierda retrocede.
 
+## 8·bis. Exportar a PDF
+
+Pulsa **⤓ PDF** (arriba, junto a *Presentar*). Se abre el diálogo de impresión
+del navegador: elige **"Guardar como PDF"** como destino y confirma. Cada slide
+se exporta como una página en formato 16:9, con la misma apariencia que en el
+editor.
+
+> Para la mejor fidelidad, en el diálogo activa **"Gráficos de fondo"** (o
+> *Background graphics*) si aparece, y deja los márgenes en *Ninguno*.
+
 ## 9. Guardar y proyectos
 
 - **Guardar:** botón **Guardar** o **⌘/Ctrl + S**. Un punto **•** junto al

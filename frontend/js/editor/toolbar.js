@@ -5,6 +5,7 @@ import { store } from '../store.js';
 import { api } from '../api.js';
 import { toast } from '../ui.js';
 import { makeElement } from '../model.js';
+import { exportPdf } from '../export/pdf.js';
 
 export function initToolbar({ loadProject, startPresent, refreshProjectList }) {
   const projName = document.getElementById('proj-name');
@@ -123,6 +124,9 @@ export function initToolbar({ loadProject, startPresent, refreshProjectList }) {
     redoBtn.disabled = !store.canRedo();
     projName.textContent = store.project ? store.project.name + (store.dirty ? ' •' : '') : '—';
   });
+
+  // ── Exportar a PDF ──
+  document.getElementById('btn-export-pdf').addEventListener('click', () => exportPdf());
 
   // ── Presentar ──
   document.getElementById('btn-present').addEventListener('click', () => startPresent());
