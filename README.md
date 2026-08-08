@@ -1,65 +1,47 @@
 # Slide Studio
 
-Editor de presentaciones por slides construido en **Python (FastAPI)** con un
-frontend **HTML/CSS/JS vanilla**. Recrea el lenguaje visual del deck original
-(IBM Plex, paleta oscura, componentes `.sd/.cmd/.cap/…`) como base para crear,
-editar, previsualizar y presentar tus propias presentaciones.
+**Aplicación simple para crear, editar y presentar diapositivas (slides).**
 
-## Requisitos
+Es una app sencilla hecha en **Python**, construida de forma rápida con ayuda de
+**IA**. Funciona en tu propio ordenador y se usa desde el navegador: creas tus
+presentaciones, las editas visualmente y las reproduces a pantalla completa.
 
-- [uv](https://docs.astral.sh/uv/) (gestor de entornos y dependencias)
-- Python 3.10+ (uv puede instalarlo por ti)
+## Qué puedes hacer
 
-## Instalación
+- Crear presentaciones y añadir todas las diapositivas que quieras.
+- Añadir **textos, títulos, imágenes, formas y fondos**, y moverlos o
+  redimensionarlos con el ratón.
+- Aplicar **animaciones** (incluida la aparición **letra por letra**) y
+  **transiciones** entre diapositivas.
+- **Presentar** a pantalla completa (avanzas con las flechas o la barra
+  espaciadora).
+- **Duplicar** o **eliminar** presentaciones y **exportar a PDF**.
+
+## Cómo usarla
+
+Necesitas [uv](https://docs.astral.sh/uv/) instalado (gestiona todo por ti).
 
 ```bash
 cd slide-studio/backend
-uv sync                  # crea .venv e instala dependencias desde pyproject.toml
+uv sync                  # solo la primera vez
+uv run python run.py     # abre la app en tu navegador
 ```
 
-## Ejecutar
+Luego abre `http://127.0.0.1:8000`. Al arrancar por primera vez verás una
+presentación de ejemplo para que empieces enseguida.
+
+¿Prefieres una ventana de escritorio en vez del navegador?
 
 ```bash
-uv run python run.py            # abre en el navegador → http://127.0.0.1:8000
-uv run python run.py --window   # ventana de escritorio (pywebview)
+uv run python run.py --window
 ```
 
-Al primer arranque se importa automáticamente el deck original
-("Tutorial · Deshabilitar login de root") como proyecto de ejemplo.
+## Guía de uso
 
-## Arquitectura
+Guía paso a paso pensada para cualquier persona (sin tecnicismos):
+**[docs/07-guia-de-uso.md](docs/07-guia-de-uso.md)**.
 
-| Capa | Ubicación | Responsabilidad |
-|------|-----------|-----------------|
-| Modelo de datos | `backend/app/models.py` | Esquema Pydantic (Project/Slide/Element/Animation/Transition/Theme), versionado |
-| Persistencia | `backend/app/storage.py` | `projects/<slug>/project.json` + `assets/` |
-| API REST | `backend/app/routes/` | CRUD de proyectos, slides y assets |
-| Importador | `backend/app/importer/deck_html.py` | Deck HTML original → modelo |
-| Interfaz | `frontend/` | Editor de 3 paneles (vanilla JS, ES modules) |
-
-El frontend nunca toca disco: todo pasa por la API. El sistema de elementos es
-abierto — un tipo nuevo = modelo en `models.py` + renderer en
-`frontend/js/renderer/elements.js` + campos en `propertiesPanel.js`.
-
-## Estado (Fases 1–3)
-
-Implementado: editor de 3 paneles, CRUD/duplicar/reordenar slides, elementos
-(texto, título, imagen, rectángulo, línea, fondo, bloque HTML), edición visual
-con arrastre/redimensión, panel de propiedades, guardar/cargar, animaciones
-(incluida **letra por letra**), modo presentación con transiciones,
-duplicar/eliminar presentaciones y **exportación a PDF**.
-
-Pendiente (fases siguientes): timeline visual, transiciones avanzadas, y otros
-formatos de exportación (HTML/imágenes/vídeo) — la lógica queda separada
-(`frontend/js/export/`) para incorporarse sin tocar el core.
-
-## Documentación
-
-Documentación completa en [`docs/`](docs/README.md): arquitectura, modelo de
-datos, API, frontend, animaciones, notas de implementación, **guía de uso** y
-guía de desarrollo/extensión.
-
-## Atajos
+## Atajos de teclado
 
 | Tecla | Acción |
 |-------|--------|
@@ -71,5 +53,4 @@ guía de desarrollo/extensión.
 
 ## Licencia
 
-Distribuido bajo licencia [MIT](LICENSE). Uso libre, incluido comercial, citando
-la autoría.
+Distribuido bajo licencia [MIT](LICENSE). Uso libre, incluido comercial.
