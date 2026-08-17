@@ -32,6 +32,12 @@ uv run python run.py     # abre la app en tu navegador
 Luego abre `http://127.0.0.1:8000`. Al arrancar por primera vez verás una
 presentación de ejemplo para que empieces enseguida.
 
+¿El puerto 8000 está ocupado? Usa otro con `--port`:
+
+```bash
+uv run python run.py --port 8080
+```
+
 ¿Prefieres una ventana de escritorio en vez del navegador?
 
 ```bash

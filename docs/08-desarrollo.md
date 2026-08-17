@@ -24,11 +24,17 @@ dependencia nueva: `uv add <paquete>` (actualiza pyproject.toml y el lock).
 ```bash
 uv run python run.py            # navegador (uvicorn en 127.0.0.1:8000)
 uv run python run.py --window   # ventana de escritorio (pywebview)
+uv run python run.py --port 8080  # puerto personalizado (por defecto 8000)
+uv run python run.py --host 0.0.0.0  # escuchar en todas las interfaces
 ```
 
 `uv run` usa automáticamente el entorno del proyecto (no hace falta activar el
 `.venv` manualmente). Para abrir un shell con el entorno activo:
 `source .venv/bin/activate`.
+
+El puerto por defecto es 8000 (o la env `SLIDE_STUDIO_PORT`). Si ese puerto ya
+está en uso, el lanzador avisa con un mensaje claro y sugiere `--port`, en lugar
+de volcar un traceback.
 
 - Recarga en caliente del frontend: basta con **recargar el navegador** (los JS
   son módulos servidos como estáticos, sin build).

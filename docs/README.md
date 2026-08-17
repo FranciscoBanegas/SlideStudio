@@ -29,6 +29,7 @@ cd slide-studio/backend
 uv sync                                  # crea .venv e instala dependencias
 uv run python run.py                     # navegador → http://127.0.0.1:8000
 uv run python run.py --window            # ventana de escritorio (pywebview)
+uv run python run.py --port 8080         # puerto personalizado (por defecto 8000)
 ```
 
 Al primer arranque se importa el deck original como proyecto de ejemplo.
