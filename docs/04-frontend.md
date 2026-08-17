@@ -28,7 +28,9 @@ frontend/
     │   ├── timeline.js       Dock inferior: línea de tiempo de animaciones
     │   └── toolbar.js        Insertar, guardar, proyectos, atajos, presentar
     ├── present/present.js    Reproducción fullscreen
-    └── export/pdf.js         Exportación a PDF (vía impresión del navegador)
+    └── export/
+        ├── pdf.js            Exportación a PDF (vía impresión del navegador)
+        └── html.js           Exportación a HTML autónomo (presentación / documento)
 ```
 
 ## El store (patrón observer)

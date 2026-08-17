@@ -77,9 +77,10 @@ explícita, protegiendo de datos corruptos y documentando el formato.
 
 ## Pendiente / desacoplado a propósito
 
-- **Exportación adicional** (HTML autónomo / imágenes / vídeo): la exportación a
-  **PDF** ya está disponible (`frontend/js/export/pdf.js`, vía la impresión del
-  navegador). Los demás formatos deben vivir en un módulo separado sin acoplarse
-  al núcleo; un backend de render (p. ej. `backend/app/export/`) es el punto de
-  extensión previsto. No implementados aún.
+- **Exportación adicional** (imágenes / vídeo): ya están disponibles la
+  exportación a **PDF** (`frontend/js/export/pdf.js`, vía impresión del
+  navegador) y a **HTML autónomo** (`frontend/js/export/html.js`, un único
+  `.html` reproducible o como documento estático). Los formatos restantes
+  (imágenes por slide, vídeo) requerirían render de servidor; un
+  `backend/app/export/` es el punto de extensión previsto. No implementados aún.
 - **Transiciones avanzadas**: `wipe` real, máscaras y efectos 3D.

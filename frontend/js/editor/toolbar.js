@@ -6,6 +6,7 @@ import { api } from '../api.js';
 import { toast } from '../ui.js';
 import { makeElement } from '../model.js';
 import { exportPdf } from '../export/pdf.js';
+import { exportHtml } from '../export/html.js';
 
 export function initToolbar({ loadProject, startPresent, refreshProjectList }) {
   const projName = document.getElementById('proj-name');
@@ -125,8 +126,21 @@ export function initToolbar({ loadProject, startPresent, refreshProjectList }) {
     projName.textContent = store.project ? store.project.name + (store.dirty ? ' •' : '') : '—';
   });
 
-  // ── Exportar a PDF ──
-  document.getElementById('btn-export-pdf').addEventListener('click', () => exportPdf());
+  // ── Exportar (PDF / HTML autónomo) ──
+  const exportMenu = document.getElementById('export-menu');
+  document.getElementById('export-btn').addEventListener('click', (e) => {
+    e.stopPropagation(); exportMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', () => exportMenu.classList.remove('open'));
+  exportMenu.querySelectorAll('[data-export]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      exportMenu.classList.remove('open');
+      const kind = btn.dataset.export;
+      if (kind === 'pdf') exportPdf();
+      else if (kind === 'html-present') exportHtml('present');
+      else if (kind === 'html-static') exportHtml('static');
+    });
+  });
 
   // ── Presentar ──
   document.getElementById('btn-present').addEventListener('click', () => startPresent());

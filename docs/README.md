@@ -40,7 +40,9 @@ Al primer arranque se importa el deck original como proyecto de ejemplo.
   elementos (texto, título, imagen, formas, fondo, bloque HTML), edición visual,
   guardar/cargar, animaciones (incl. letra por letra), transiciones, modo
   presentación y **timeline visual** de animaciones.
-- **Exportación a PDF** disponible (botón ⤓ PDF → "Guardar como PDF").
+- **Exportación** disponible desde el menú ⤓ Exportar: **PDF**, **HTML autónomo
+  reproducible** (un `.html` que se abre sin servidor y se presenta con
+  navegación y animaciones) y **HTML como documento** (todos los slides en scroll).
 - **Pendiente (fase 6 y siguientes):** pulido de UX, transiciones avanzadas y
-  otros formatos de exportación (HTML/imágenes/vídeo). La arquitectura ya deja
-  estos puntos desacoplados del núcleo (`frontend/js/export/`).
+  exportación a imágenes/vídeo (requerirían render de servidor). La arquitectura
+  ya deja estos puntos desacoplados del núcleo (`frontend/js/export/`).

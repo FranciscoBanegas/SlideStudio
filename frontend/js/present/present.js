@@ -7,7 +7,7 @@ import { renderSlide } from '../renderer/slideRenderer.js';
 import { injectKeyframes, primeElement, playElement } from '../anim/animations.js';
 import { animTarget } from '../renderer/elements.js';
 
-const TRANSITION_INIT = {
+export const TRANSITION_INIT = {
   none: () => 'none',
   fade: () => 'none',
   slideH: (dir) => `translateX(${dir > 0 ? 100 : -100}%)`,

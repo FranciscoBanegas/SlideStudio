@@ -49,7 +49,14 @@
     <div class="toolgroup">
       <button class="btn ghost" id="btn-timeline" title="Mostrar u ocultar el timeline de animaciones">☰ Timeline</button>
       <button class="btn" id="btn-save">Guardar <span class="kbd">⌘S</span></button>
-      <button class="btn" id="btn-export-pdf" title="Exportar la presentación a PDF">⤓ PDF</button>
+      <div class="menu" id="export-menu">
+        <button class="btn" id="export-btn" title="Exportar la presentación">⤓ Exportar ▾</button>
+        <div class="menu-pop" style="left:auto;right:0">
+          <button class="menu-item" data-export="pdf"><span class="ic">⤓</span> PDF</button>
+          <button class="menu-item" data-export="html-present"><span class="ic">▶</span> HTML · Presentación</button>
+          <button class="menu-item" data-export="html-static"><span class="ic">▤</span> HTML · Documento</button>
+        </div>
+      </div>
       <button class="btn primary" id="btn-present">▶ Presentar</button>
     </div>
   </header>

@@ -117,11 +117,12 @@ En `frontend/js/anim/animations.js`:
 
 ## Trabajo futuro (desacoplado del núcleo)
 
-- **Exportación adicional**: la exportación a **PDF** ya existe en el cliente
-  (`frontend/js/export/pdf.js`, vía la impresión del navegador). Para HTML
-  autónomo, imágenes o vídeo con render de servidor, crear `backend/app/export/`
-  con backends independientes que consuman el modelo sin acoplarse al editor, y
-  exponer endpoints `POST /api/projects/{slug}/export/{formato}`.
+- **Exportación adicional**: ya existen en el cliente la exportación a **PDF**
+  (`frontend/js/export/pdf.js`, vía impresión) y a **HTML autónomo**
+  (`frontend/js/export/html.js`). Para imágenes o vídeo con render de servidor,
+  crear `backend/app/export/` con backends independientes que consuman el modelo
+  sin acoplarse al editor, y exponer endpoints
+  `POST /api/projects/{slug}/export/{formato}`.
 - **Transiciones avanzadas**: `wipe` real, máscaras y efectos 3D.
 
 > El **timeline visual** de la fase 5 ya está implementado
