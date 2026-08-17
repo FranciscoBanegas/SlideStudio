@@ -193,14 +193,49 @@ function presentRuntime() {
     setTimeout(() => { anims.forEach((a) => playElement(a.target, a.anim)); }, d * 1000 * 0.6);
   }
 
-  function next() { if (idx < deck.slides.length - 1) show(idx + 1, 1); }
-  function prev() { if (idx > 0) show(idx - 1, -1); }
+  function unitCount(node, anim) {
+    if (!anim || anim.applyTo === 'element') return 1;
+    const t = node.getAttribute('data-plain') || node.textContent || '';
+    if (anim.applyTo === 'letter') return Math.max(1, [...t].length);
+    if (anim.applyTo === 'word') return Math.max(1, t.trim().split(/\s+/).filter(Boolean).length);
+    return Math.max(1, t.split('\n').length);
+  }
+
+  // Fase de salida: los elementos con direction 'out' del slide actual salen
+  // antes de pasar al siguiente. Devuelve la duración máxima (segundos).
+  function playExits() {
+    const slide = deck.slides[idx];
+    let maxEnd = 0;
+    canvas.querySelectorAll('[data-el-id]').forEach((node) => {
+      const anim = slide.anims[node.dataset.elId];
+      if (!anim || anim.direction !== 'out') return;
+      const target = node.hasAttribute('data-anim-self')
+        ? node : (node.querySelector('[data-anim-target]') || node);
+      playElement(target, anim);
+      maxEnd = Math.max(maxEnd, animEnd(anim, unitCount(target, anim)));
+    });
+    return maxEnd;
+  }
+
+  let busy = false, pending = null;
+  function go(i, dir) {
+    if (busy) return;
+    const wait = playExits();
+    if (wait > 0) {
+      busy = true;
+      clearTimeout(pending);
+      pending = setTimeout(() => { busy = false; show(i, dir); }, wait * 1000);
+    } else { show(i, dir); }
+  }
+
+  function next() { if (idx < deck.slides.length - 1) go(idx + 1, 1); }
+  function prev() { if (idx > 0) go(idx - 1, -1); }
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
-    else if (e.key === 'Home') { show(0, 1); }
-    else if (e.key === 'End') { show(deck.slides.length - 1, 1); }
+    else if (e.key === 'Home') { go(0, 1); }
+    else if (e.key === 'End') { go(deck.slides.length - 1, 1); }
     else if (e.key.toLowerCase() === 'f') {
       if (document.fullscreenElement) document.exitFullscreen();
       else document.documentElement.requestFullscreen().catch(() => {});

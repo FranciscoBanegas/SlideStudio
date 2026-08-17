@@ -7,22 +7,28 @@ final visible es la base, y la animación se **dispara** al presentar/previsuali
 
 ## Animaciones de elemento
 
-Cada tipo corresponde a un `@keyframes` inyectado una sola vez en el documento:
+Cada animación se interpreta como **familia de efecto + dirección**. El motor
+normaliza el `type` a una familia y `direction` (`in`/`out`) elige entre el
+`@keyframes` de entrada o de salida de esa familia. Así un mismo elemento puede
+**entrar** con un efecto y (al cambiar de slide) **salir** con él.
 
-| Tipo | Efecto |
-|------|--------|
-| `fadeIn` / `fadeOut` | Opacidad |
-| `slideInLeft` / `Right` / `Top` / `Bottom` | Desplazamiento + opacidad |
-| `scaleIn` | Escala desde 0.86 |
-| `zoom` | Escala desde 1.25 |
-| `blurIn` | Desenfoque → nítido |
-| `bounce` | Rebote de entrada |
-| `typewriter` | Máquina de escribir (carácter a carácter) |
+| Efecto (familia) | Entrada / Salida |
+|------------------|------------------|
+| Desvanecer (`fade`) | opacidad |
+| Deslizar ←/→/↑/↓ (`slideLeft/Right/Top/Bottom`) | desplazamiento + opacidad |
+| Escala (`scale`) | desde/hacia 0.86 |
+| Zoom (`zoom`) | desde/hacia 1.25 |
+| Desenfoque (`blur`) | blur ↔ nítido |
+| Rebote (`bounce`) | rebote |
+| Voltear 3D (`flip`) | giro en Y con perspectiva |
+| Giro (`rotate`) | rotación + escala |
+| Barrido (`wipe`) | revelado/ocultado con `clip-path` |
+| Máquina de escribir (`typewriter`) | escribe (entrada) / borra (salida) carácter a carácter |
 
 Parámetros configurables por elemento (`Animation`):
 
 ```
-Tipo:      fadeIn
+Efecto:    Desvanecer        (familia; el literal guardado mantiene el sufijo In)
 Aplicar a: ● Cada letra   ○ Elemento   ○ Cada palabra   ○ Cada línea
 Duración:  0.4 s
 Delay:     0.0 s   (antes de empezar)
@@ -30,6 +36,20 @@ Stagger:   0.05 s  (retardo entre unidades)
 Easing:    ease-out
 Dirección: entrada / salida
 ```
+
+### Entrada y salida
+
+- **Entrada** (`direction: "in"`): el elemento parte oculto y aparece al mostrarse
+  el slide (comportamiento clásico).
+- **Salida** (`direction: "out"`): el elemento permanece visible y, **al cambiar
+  de slide**, se va con su efecto (se desliza fuera, se desvanece…). En
+  [`present.js`](../frontend/js/present/present.js) la navegación tiene una *fase
+  de salida*: primero salen los elementos con `direction: "out"` del slide actual
+  (se espera su duración máxima, calculada con `animEnd`) y luego entra el
+  siguiente slide. Si el slide no tiene salidas, el cambio es inmediato.
+
+El mismo comportamiento se reproduce en el HTML autónomo exportado (el motor
+`animations.js` se incrusta verbatim y el runtime replica la fase de salida).
 
 ## Animación por letra / palabra / línea
 

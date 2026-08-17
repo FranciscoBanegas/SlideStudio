@@ -9,8 +9,8 @@ import { initSlidesPanel } from './editor/slidesPanel.js';
 import { initPropertiesPanel } from './editor/propertiesPanel.js';
 import { initToolbar } from './editor/toolbar.js';
 import { initTimeline } from './editor/timeline.js';
-import { initPresent } from './present/present.js';
-import { injectKeyframes, primeElement, playElement, clearElement } from './anim/animations.js';
+import { initPresent, unitCount } from './present/present.js';
+import { injectKeyframes, primeElement, playElement, clearElement, animEnd } from './anim/animations.js';
 import { animTarget } from './renderer/elements.js';
 
 const select = document.getElementById('project-select');
@@ -46,9 +46,15 @@ function previewAnimation(el) {
   if (!node) return;
   const target = node.hasAttribute('data-anim-self') ? node : animTarget(node);
   clearElement(target);
-  primeElement(target, el.animation);
-  void target.offsetWidth;            // fuerza reflow del estado inicial
+  primeElement(target, el.animation);          // salida: no-op (queda visible)
+  void target.offsetWidth;                     // fuerza reflow del estado inicial
   playElement(target, el.animation);
+  // En salida el elemento termina oculto; tras la animación se restaura su
+  // estado visible para poder seguir editando.
+  if (el.animation && el.animation.direction === 'out') {
+    const wait = animEnd(el.animation, unitCount(el));
+    setTimeout(() => clearElement(target), Math.round(wait * 1000) + 120);
+  }
 }
 
 // Reproduce en el canvas de edición todas las animaciones del slide activo,

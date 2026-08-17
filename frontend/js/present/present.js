@@ -4,8 +4,18 @@
 
 import { store } from '../store.js';
 import { renderSlide } from '../renderer/slideRenderer.js';
-import { injectKeyframes, primeElement, playElement } from '../anim/animations.js';
+import { injectKeyframes, primeElement, playElement, animEnd } from '../anim/animations.js';
 import { animTarget } from '../renderer/elements.js';
+
+// Nº de unidades animadas de un elemento (para el stagger de letra/palabra/línea).
+export function unitCount(el) {
+  const a = el.animation;
+  if (!a || a.applyTo === 'element' || el.type !== 'text') return 1;
+  const text = el.content || '';
+  if (a.applyTo === 'letter') return Math.max(1, [...text].length);
+  if (a.applyTo === 'word') return Math.max(1, text.trim().split(/\s+/).filter(Boolean).length);
+  return Math.max(1, text.split('\n').length);
+}
 
 export const TRANSITION_INIT = {
   none: () => 'none',
@@ -27,6 +37,8 @@ export function initPresent() {
 
   let idx = 0;
   let active = false;
+  let busy = false;      // hay una fase de salida en curso
+  let _pending = null;
   let _ro = null;
 
   function dims() { const p = store.project; return { w: p.width, h: p.height }; }
@@ -79,16 +91,46 @@ export function initPresent() {
     setTimeout(() => { anims.forEach(({ target, anim }) => playElement(target, anim)); }, d * 1000 * 0.6);
   }
 
-  function next() { if (idx < store.slides.length - 1) show(idx + 1, 1); }
-  function prev() { if (idx > 0) show(idx - 1, -1); }
+  // Reproduce las animaciones de SALIDA de los elementos del slide actual y
+  // devuelve su duración máxima (segundos). 0 si no hay ninguna.
+  function playExits() {
+    const slide = store.slides[idx];
+    if (!slide) return 0;
+    let maxEnd = 0;
+    canvas.querySelectorAll('[data-el-id]').forEach((node) => {
+      const el = slide.elements.find((e) => e.id === node.dataset.elId);
+      if (!el || !el.animation || el.animation.type === 'none' || el.animation.direction !== 'out') return;
+      const target = node.hasAttribute('data-anim-self') ? node : animTarget(node);
+      playElement(target, el.animation);
+      maxEnd = Math.max(maxEnd, animEnd(el.animation, unitCount(el)));
+    });
+    return maxEnd;
+  }
+
+  // Cambia de slide: primero salen los elementos del slide actual (si los hay),
+  // luego se muestra el destino con su transición de entrada.
+  function go(i, dir) {
+    if (busy) return;
+    const wait = playExits();
+    if (wait > 0) {
+      busy = true;
+      clearTimeout(_pending);
+      _pending = setTimeout(() => { busy = false; show(i, dir); }, wait * 1000);
+    } else {
+      show(i, dir);
+    }
+  }
+
+  function next() { if (idx < store.slides.length - 1) go(idx + 1, 1); }
+  function prev() { if (idx > 0) go(idx - 1, -1); }
 
   function onKey(e) {
     if (!active) return;
     if (e.key === 'Escape') { stop(); }
     else if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
-    else if (e.key === 'Home') { show(0, 1); }
-    else if (e.key === 'End') { show(store.slides.length - 1, 1); }
+    else if (e.key === 'Home') { go(0, 1); }
+    else if (e.key === 'End') { go(store.slides.length - 1, 1); }
   }
 
   function start(fromIndex) {
@@ -116,6 +158,8 @@ export function initPresent() {
 
   function stop() {
     active = false;
+    busy = false;
+    clearTimeout(_pending);
     root.classList.remove('on');
     window.removeEventListener('keydown', onKey);
     window.removeEventListener('resize', fit);

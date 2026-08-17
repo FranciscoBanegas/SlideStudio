@@ -8,9 +8,13 @@ export function uid(prefix = 'el') {
 }
 
 // Catálogos para la UI (deben coincidir con los Literal de models.py).
+// Efectos disponibles. La DIRECCIÓN (entrada/salida) se controla con el campo
+// `direction`; el mismo efecto sirve para entrar o salir. Los literales
+// mantienen el sufijo "In" por compatibilidad con datos existentes.
 export const ANIMATION_TYPES = [
-  'none', 'fadeIn', 'fadeOut', 'slideInLeft', 'slideInRight', 'slideInTop',
-  'slideInBottom', 'scaleIn', 'zoom', 'blurIn', 'bounce', 'typewriter',
+  'none', 'fadeIn', 'slideInLeft', 'slideInRight', 'slideInTop',
+  'slideInBottom', 'scaleIn', 'zoom', 'blurIn', 'bounce',
+  'flipIn', 'rotateIn', 'wipeIn', 'typewriter',
 ];
 export const ANIMATION_APPLY = ['element', 'letter', 'word', 'line'];
 export const TRANSITION_TYPES = ['none', 'fade', 'slideH', 'slideV', 'zoom', 'blur', 'scale', 'push', 'wipe'];

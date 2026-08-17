@@ -38,6 +38,11 @@ AnimationType = Literal[
     "blurIn",
     "bounce",
     "typewriter",
+    # Efectos añadidos (fase 6). La dirección (entrada/salida) la controla el
+    # campo `direction`; el mismo efecto sirve para entrar o salir.
+    "flipIn",
+    "rotateIn",
+    "wipeIn",
 ]
 
 # A qué unidad se aplica la animación. "letter"/"word"/"line" habilitan el

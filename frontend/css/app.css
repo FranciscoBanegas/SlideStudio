@@ -291,6 +291,9 @@ select{ cursor:pointer; appearance:none;
   display:flex; align-items:center; overflow:visible; min-width:6px; user-select:none;
 }
 .tl-bar:active{ cursor:grabbing; }
+/* Barras de salida: tinte ámbar para distinguirlas de las de entrada. */
+.tl-bar.tl-bar-out{ background:linear-gradient(180deg,var(--ui-amber),#c9973f); }
+.tl-bar.tl-bar-out .tl-bar-label{ color:#241a06; }
 .tl-bar-label{
   padding:0 8px; font-size:11px; color:#07121d; font-weight:600;
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap; pointer-events:none;

@@ -10,6 +10,17 @@ import {
   ANIMATION_TYPES, ANIMATION_APPLY, TRANSITION_TYPES, EASINGS, TEXT_ROLES,
 } from '../model.js';
 
+// Etiquetas legibles del efecto (la dirección entrada/salida la fija `direction`).
+const ANIM_LABELS = {
+  none: 'Ninguna', fadeIn: 'Desvanecer',
+  slideInLeft: 'Deslizar ← izq.', slideInRight: 'Deslizar → der.',
+  slideInTop: 'Deslizar ↑ arriba', slideInBottom: 'Deslizar ↓ abajo',
+  scaleIn: 'Escala', zoom: 'Zoom', blurIn: 'Desenfoque', bounce: 'Rebote',
+  flipIn: 'Voltear 3D', rotateIn: 'Giro', wipeIn: 'Barrido',
+  typewriter: 'Máquina de escribir',
+};
+const ANIM_TYPE_OPTIONS = ANIMATION_TYPES.map((t) => [t, ANIM_LABELS[t] || t]);
+
 export function initPropertiesPanel(onPreviewAnim) {
   const body = document.getElementById('props-body');
   const badge = document.getElementById('el-type-badge');
@@ -111,7 +122,7 @@ function buildElementPanel(root, el, onPreviewAnim) {
   previewBtn.textContent = '▶ Previsualizar animación';
   previewBtn.addEventListener('click', () => onPreviewAnim && onPreviewAnim(el));
   section(root, 'Animación', [
-    field('Tipo', select(el, 'animation.type', ANIMATION_TYPES), true),
+    field('Efecto', select(el, 'animation.type', ANIM_TYPE_OPTIONS), true),
     field('Aplicar a', select(el, 'animation.applyTo', ANIMATION_APPLY)),
     field('Dirección', select(el, 'animation.direction', [['in', 'Entrada'], ['out', 'Salida']])),
     field('Duración (s)', number(el, 'animation.duration', { step: 0.05, min: 0, max: 10 })),

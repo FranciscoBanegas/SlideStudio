@@ -173,11 +173,12 @@ function buildBar(el) {
   const dur = Math.max(MIN_DURATION, a.duration || 0);
   const delay = a.delay || 0;
 
+  const out = a.direction === 'out';
   const bar = document.createElement('div');
-  bar.className = 'tl-bar';
+  bar.className = 'tl-bar' + (out ? ' tl-bar-out' : '');
   bar.style.left = `${delay * pxPerSec}px`;
   bar.style.width = `${dur * pxPerSec}px`;
-  bar.title = `${a.type} · delay ${delay.toFixed(2)}s · ${dur.toFixed(2)}s`;
+  bar.title = `${a.type} · ${out ? 'salida' : 'entrada'} · delay ${delay.toFixed(2)}s · ${dur.toFixed(2)}s`;
 
   // Cola de stagger (letra/palabra/línea): extensión tenue hasta el fin total.
   const total = endTime(el);
@@ -191,7 +192,7 @@ function buildBar(el) {
 
   const lbl = document.createElement('span');
   lbl.className = 'tl-bar-label';
-  lbl.textContent = a.type;
+  lbl.textContent = (out ? '↤ ' : '') + a.type;
   bar.appendChild(lbl);
 
   const handle = document.createElement('div');
