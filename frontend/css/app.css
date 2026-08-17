@@ -23,7 +23,9 @@
   --topbar-h:56px;
   --rail-w:248px;
   --props-w:320px;
-  --timeline-h:210px;
+  /* Altura del dock del timeline: relativa a la ventana para no comprimir el
+     rail en pantallas de poca altura. */
+  --timeline-h:clamp(150px, 26vh, 240px);
   font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;
 }
 
@@ -118,7 +120,7 @@ button{ font-family:inherit; color:inherit; }
 .rail-list{ flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:12px; }
 
 .slide-card{
-  position:relative; border:1px solid var(--ui-line); border-radius:var(--ui-radius);
+  position:relative; flex:0 0 auto; border:1px solid var(--ui-line); border-radius:var(--ui-radius);
   overflow:hidden; cursor:pointer; background:var(--ui-panel-2);
   transition:border-color .12s ease, box-shadow .12s ease; user-select:none;
 }
