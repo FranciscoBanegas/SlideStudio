@@ -8,6 +8,7 @@ import { initCanvas } from './editor/canvas.js';
 import { initSlidesPanel } from './editor/slidesPanel.js';
 import { initPropertiesPanel } from './editor/propertiesPanel.js';
 import { initToolbar } from './editor/toolbar.js';
+import { initTimeline } from './editor/timeline.js';
 import { initPresent } from './present/present.js';
 import { injectKeyframes, primeElement, playElement, clearElement } from './anim/animations.js';
 import { animTarget } from './renderer/elements.js';
@@ -50,11 +51,32 @@ function previewAnimation(el) {
   playElement(target, el.animation);
 }
 
+// Reproduce en el canvas de edición todas las animaciones del slide activo,
+// encadenadas según sus delays. Reutiliza la misma lógica de disparo que el
+// modo presentación (present.js): prime → reflow → play sobre cada elemento.
+function playSlide() {
+  const canvas = document.getElementById('slide-canvas');
+  const slide = store.currentSlide();
+  if (!slide) return;
+  const anims = [];
+  canvas.querySelectorAll('[data-el-id]').forEach((node) => {
+    const el = slide.elements.find((e) => e.id === node.dataset.elId);
+    if (!el || !el.animation || el.animation.type === 'none') return;
+    const target = node.hasAttribute('data-anim-self') ? node : animTarget(node);
+    clearElement(target);
+    primeElement(target, el.animation);
+    anims.push({ target, anim: el.animation });
+  });
+  void canvas.offsetWidth;            // fuerza reflow del estado inicial de todos
+  anims.forEach(({ target, anim }) => playElement(target, anim));
+}
+
 async function boot() {
   injectKeyframes();
   canvasApi = initCanvas();
   initSlidesPanel();
   initPropertiesPanel(previewAnimation);
+  initTimeline({ onPlaySlide: playSlide });
   const present = initPresent();
   initToolbar({
     loadProject,

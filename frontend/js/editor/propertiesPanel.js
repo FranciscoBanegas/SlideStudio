@@ -102,21 +102,22 @@ function buildElementPanel(root, el, onPreviewAnim) {
     field('Opacidad', range(el, 'opacity', { min: 0, max: 1, step: 0.01 })),
   ]);
 
-  // Animación (común)
-  const anim = el.animation;
+  // Animación (común). Se enlaza con ruta relativa al elemento
+  // (`animation.xxx`) para que refreshValues() —que resuelve los binds contra el
+  // elemento— refleje en vivo los cambios hechos desde el timeline.
   const previewBtn = document.createElement('button');
   previewBtn.className = 'btn';
   previewBtn.style.width = '100%';
   previewBtn.textContent = '▶ Previsualizar animación';
   previewBtn.addEventListener('click', () => onPreviewAnim && onPreviewAnim(el));
   section(root, 'Animación', [
-    field('Tipo', select(anim, 'type', ANIMATION_TYPES), true),
-    field('Aplicar a', select(anim, 'applyTo', ANIMATION_APPLY)),
-    field('Dirección', select(anim, 'direction', [['in', 'Entrada'], ['out', 'Salida']])),
-    field('Duración (s)', number(anim, 'duration', { step: 0.05, min: 0, max: 10 })),
-    field('Delay (s)', number(anim, 'delay', { step: 0.05, min: 0, max: 10 })),
-    field('Stagger (s)', number(anim, 'stagger', { step: 0.01, min: 0, max: 2 })),
-    field('Easing', select(anim, 'easing', EASINGS), true),
+    field('Tipo', select(el, 'animation.type', ANIMATION_TYPES), true),
+    field('Aplicar a', select(el, 'animation.applyTo', ANIMATION_APPLY)),
+    field('Dirección', select(el, 'animation.direction', [['in', 'Entrada'], ['out', 'Salida']])),
+    field('Duración (s)', number(el, 'animation.duration', { step: 0.05, min: 0, max: 10 })),
+    field('Delay (s)', number(el, 'animation.delay', { step: 0.05, min: 0, max: 10 })),
+    field('Stagger (s)', number(el, 'animation.stagger', { step: 0.01, min: 0, max: 2 })),
+    field('Easing', select(el, 'animation.easing', EASINGS), true),
     wrapFull(previewBtn),
   ]);
 }

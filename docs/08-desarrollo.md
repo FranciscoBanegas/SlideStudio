@@ -111,8 +111,13 @@ En `frontend/js/anim/animations.js`:
 
 ## Trabajo futuro (desacoplado del núcleo)
 
-- **Timeline visual** (`frontend/js/editor/`): UI sobre los `delay`/`stagger`
-  que ya guarda el modelo.
-- **Exportación**: crear `backend/app/export/` con backends independientes
-  (HTML autónomo, PDF, imágenes, vídeo) que consuman el modelo sin acoplarse al
-  editor. Exponer endpoints `POST /api/projects/{slug}/export/{formato}`.
+- **Exportación adicional**: la exportación a **PDF** ya existe en el cliente
+  (`frontend/js/export/pdf.js`, vía la impresión del navegador). Para HTML
+  autónomo, imágenes o vídeo con render de servidor, crear `backend/app/export/`
+  con backends independientes que consuman el modelo sin acoplarse al editor, y
+  exponer endpoints `POST /api/projects/{slug}/export/{formato}`.
+- **Transiciones avanzadas**: `wipe` real, máscaras y efectos 3D.
+
+> El **timeline visual** de la fase 5 ya está implementado
+> (`frontend/js/editor/timeline.js`); ver
+> [05 · Animaciones y transiciones](05-animaciones-y-transiciones.md#timeline-visual).

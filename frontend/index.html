@@ -47,6 +47,7 @@
     </div>
 
     <div class="toolgroup">
+      <button class="btn ghost" id="btn-timeline" title="Mostrar u ocultar el timeline de animaciones">☰ Timeline</button>
       <button class="btn" id="btn-save">Guardar <span class="kbd">⌘S</span></button>
       <button class="btn" id="btn-export-pdf" title="Exportar la presentación a PDF">⤓ PDF</button>
       <button class="btn primary" id="btn-present">▶ Presentar</button>
@@ -90,6 +91,17 @@
       <div class="prop-empty">Selecciona un elemento en el canvas para editar sus propiedades, o usa <strong>+ Insertar</strong> para añadir uno.</div>
     </div>
   </aside>
+
+  <!-- ── Dock inferior: timeline de animaciones ── -->
+  <section class="timeline" id="timeline">
+    <div class="timeline-head">
+      <span class="tl-title">Timeline</span>
+      <button class="btn ghost" id="tl-play" title="Reproducir las animaciones del slide">▶ Reproducir slide</button>
+      <div class="spacer"></div>
+      <button class="btn ghost icon" id="tl-toggle" title="Ocultar timeline">▾</button>
+    </div>
+    <div class="timeline-body" id="timeline-body"></div>
+  </section>
 
 </div>
 

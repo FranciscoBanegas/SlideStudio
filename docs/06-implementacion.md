@@ -49,7 +49,7 @@ explícita, protegiendo de datos corruptos y documentando el formato.
 | 2 | Crear/eliminar/duplicar/reordenar slides, guardar/cargar | ✅ |
 | 3 | Elementos: texto, imagen, formas, fondo (+ bloque HTML) | ✅ |
 | 4 | Animaciones: entrada/salida, por elemento/palabra/letra | ✅ (motor funcional) |
-| 5 | Transiciones entre slides, timeline, modo presentación | ◐ (transiciones y presentación listas; **timeline pendiente**) |
+| 5 | Transiciones entre slides, timeline, modo presentación | ✅ (transiciones, presentación y **timeline visual** listos) |
 | 6 | Pulido: UX, rendimiento, errores, persistencia | ◐ (en curso) |
 
 ## Correcciones notables
@@ -62,10 +62,24 @@ explícita, protegiendo de datos corruptos y documentando el formato.
   no dependa del ciclo de composición.
 - **Escalado de miniaturas y primer ajuste:** se hacen con medición síncrona
   (forzando reflow) en lugar de depender de callbacks diferidos.
+- **Escala del timeline al redimensionar:** el timeline no recalculaba su escala
+  `pxPerSec` al cambiar el ancho disponible (abrir/cerrar el dock, redimensionar
+  la ventana), dejando las barras a una escala obsoleta. Se añadió un
+  `ResizeObserver` sobre el cuerpo del timeline (mismo patrón que el canvas), que
+  reconstruye solo si el ancho cambió. Además, el eje se escala al segundo entero
+  superior para que las marcas de tiempo encajen exactas dentro del track.
+- **Sincronía de campos de animación:** los campos de animación del panel de
+  propiedades se enlazaban contra el objeto `animation` (`data-bind="delay"`),
+  pero `refreshValues()` resuelve los binds contra el elemento, por lo que nunca
+  se refrescaban en vivo. Se pasaron a ruta relativa al elemento
+  (`animation.delay`), que funciona en ambos sentidos: editar desde el timeline
+  actualiza el panel y viceversa.
 
 ## Pendiente / desacoplado a propósito
 
-- **Timeline visual** (fase 5): el modelo ya guarda `delay`/`stagger`/`duration`
-  por elemento; falta la UI.
-- **Exportación** (HTML/PDF/imágenes/vídeo): debe vivir en un módulo separado
-  (p. ej. `backend/app/export/`) sin acoplarse al núcleo. No implementada aún.
+- **Exportación adicional** (HTML autónomo / imágenes / vídeo): la exportación a
+  **PDF** ya está disponible (`frontend/js/export/pdf.js`, vía la impresión del
+  navegador). Los demás formatos deben vivir en un módulo separado sin acoplarse
+  al núcleo; un backend de render (p. ej. `backend/app/export/`) es el punto de
+  extensión previsto. No implementados aún.
+- **Transiciones avanzadas**: `wipe` real, máscaras y efectos 3D.

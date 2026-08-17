@@ -13,6 +13,8 @@ presentaciones, las editas visualmente y las reproduces a pantalla completa.
   redimensionarlos con el ratón.
 - Aplicar **animaciones** (incluida la aparición **letra por letra**) y
   **transiciones** entre diapositivas.
+- Ajustar los **tiempos de animación** en una **línea de tiempo** visual
+  (arrastra para cambiar el retardo y la duración de cada elemento).
 - **Presentar** a pantalla completa (avanzas con las flechas o la barra
   espaciadora).
 - **Duplicar** o **eliminar** presentaciones y **exportar a PDF**.

@@ -7,7 +7,7 @@ carga directamente. Se organiza por responsabilidad.
 
 ```
 frontend/
-├── index.html              Shell: toolbar + 3 paneles + capa de presentación
+├── index.html              Shell: toolbar + 3 paneles + timeline + presentación
 ├── css/
 │   ├── app.css             Cromo del editor (tokens --ui-*)
 │   └── slide-theme.css     Tokens y componentes del deck (--bg, .sd, .cmd…) 1:1
@@ -25,6 +25,7 @@ frontend/
     │   ├── canvas.js         Escalado, selección, arrastre, redimensión
     │   ├── slidesPanel.js    Rail: crear/seleccionar/eliminar/duplicar/reordenar
     │   ├── propertiesPanel.js Panel derecho por tipo + animación
+    │   ├── timeline.js       Dock inferior: línea de tiempo de animaciones
     │   └── toolbar.js        Insertar, guardar, proyectos, atajos, presentar
     ├── present/present.js    Reproducción fullscreen
     └── export/pdf.js         Exportación a PDF (vía impresión del navegador)
@@ -71,6 +72,16 @@ reajusta de forma fiable aunque el entorno no emita eventos de ventana.
 - **Editar texto:** doble clic → `contenteditable` en línea.
 - **Teclado:** flechas mueven (Shift = 10px), Supr elimina, ⌘/Ctrl+Z/Y
   deshacer/rehacer, ⌘/Ctrl+S guardar.
+
+## Timeline de animaciones
+
+El dock inferior (`editor/timeline.js`, conmutable con el botón «☰ Timeline»)
+dibuja una pista por elemento sobre un eje de segundos. Arrastrar la barra edita
+el `delay` del elemento y su borde derecho la `duration`; el botón «▶ Reproducir
+slide» encadena todas las animaciones en el canvas. Edita el mismo objeto
+`Animation` que el panel de propiedades (misma fuente de verdad), y recalcula su
+escala al redimensionar con un `ResizeObserver`. Detalles en
+[05 · Animaciones y transiciones](05-animaciones-y-transiciones.md#timeline-visual).
 
 ## Fidelidad visual
 

@@ -89,14 +89,35 @@ disparan a continuación (tras ~60 % de la transición) para encadenar el efecto
 ```
 propertiesPanel  → edita el objeto Animation del elemento (persiste en project.json)
       ↓
-▶ Previsualizar  → main.previewAnimation() reproduce en el canvas de edición
+timeline         → misma edición en una vista temporal (arrastrar barra = delay,
+                   borde = duración); comparte la fuente de verdad del store
+      ↓
+▶ Previsualizar  → main.previewAnimation() reproduce un elemento en el canvas
+▶ Reproducir slide → main.playSlide() encadena todas las animaciones del slide
       ↓
 ▶ Presentar      → present.js reproduce transición + animaciones a pantalla completa
 ```
 
-## Roadmap (fases 4–5)
+## Timeline visual
 
-- **Timeline visual** para ordenar en el tiempo la entrada de cada elemento
-  (`0s ─ Título ─ Subtítulo ─ Imagen ─ …`). El modelo ya guarda `delay`/`stagger`
-  por elemento, base suficiente para construirlo encima.
+El dock inferior ([`frontend/js/editor/timeline.js`](../frontend/js/editor/timeline.js))
+muestra una **pista por elemento** del slide activo sobre un eje temporal común.
+Cada barra representa `delay → delay+duration`; para animaciones por
+letra/palabra/línea añade una **cola de stagger** que estima el fin total
+(`delay + (n−1)·stagger + duration`, con `n` derivado del contenido del texto).
+
+Interacciones (mismo patrón de arrastre que el canvas: snapshot al empezar, un
+solo paso de historial por gesto):
+
+- **Arrastrar la barra** → cambia `delay`.
+- **Arrastrar su borde derecho** → cambia `duration`.
+- **Clic en una fila** → selecciona el elemento.
+- **▶ Reproducir slide** → dispara todas las animaciones encadenadas en el canvas.
+
+Edita el mismo objeto `Animation` que el panel de propiedades (única fuente de
+verdad en el store), por lo que ambos se mantienen en sincronía. La escala se
+recalcula al redimensionar mediante un `ResizeObserver`, igual que el canvas.
+
+## Roadmap
+
 - Transiciones avanzadas (`wipe` real, máscaras, 3D).
