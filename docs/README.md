@@ -38,8 +38,11 @@ Al primer arranque se importa el deck original como proyecto de ejemplo.
 
 - **Fases 1–5 completas:** editor de 3 paneles, CRUD/duplicar/reordenar slides,
   elementos (texto, título, imagen, formas, fondo, bloque HTML), edición visual,
-  guardar/cargar, animaciones (incl. letra por letra), transiciones, modo
-  presentación y **timeline visual** de animaciones.
+  guardar/cargar, animaciones (incl. letra por letra y **entrada/salida**),
+  transiciones, modo presentación y **timeline visual** de animaciones.
+- **Plantillas:** 3 plantillas de sistema (la del ejemplo + 2 variantes) para
+  empezar una presentación, y opción de **guardar cualquier presentación como
+  plantilla** (sistema vs. usuario, separadas).
 - **Exportación** disponible desde el menú ⤓ Exportar: **PDF**, **HTML autónomo
   reproducible** (un `.html` que se abre sin servidor y se presenta con
   navegación y animaciones) y **HTML como documento** (todos los slides en scroll).

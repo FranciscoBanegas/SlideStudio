@@ -8,7 +8,7 @@ import { makeElement } from '../model.js';
 import { exportPdf } from '../export/pdf.js';
 import { exportHtml } from '../export/html.js';
 
-export function initToolbar({ loadProject, startPresent, refreshProjectList }) {
+export function initToolbar({ loadProject, startPresent, refreshProjectList, openTemplates }) {
   const projName = document.getElementById('proj-name');
   const select = document.getElementById('project-select');
 
@@ -63,15 +63,20 @@ export function initToolbar({ loadProject, startPresent, refreshProjectList }) {
   document.getElementById('btn-save').addEventListener('click', save);
 
   // ── Proyectos ──
-  document.getElementById('btn-new-project').addEventListener('click', async () => {
-    const name = prompt('Nombre del nuevo proyecto:', 'Nueva presentación');
-    if (!name) return;
+  // "Nuevo" abre el selector de Plantillas (elegir plantilla o empezar en blanco).
+  document.getElementById('btn-new-project').addEventListener('click', () => {
+    if (openTemplates) openTemplates();
+  });
+
+  // Guardar la presentación actual como plantilla reutilizable.
+  document.getElementById('btn-save-template').addEventListener('click', async () => {
+    if (!store.slug) return;
+    const name = prompt('Nombre de la plantilla:', (store.project && store.project.name) || 'Plantilla');
+    if (name === null) return;
     try {
-      const { slug } = await api.createProject(name);
-      await refreshProjectList();
-      select.value = slug;
-      await loadProject(slug);
-      toast('Proyecto creado.');
+      if (store.dirty) { await api.saveProject(store.slug, store.project); store.markSaved(); }
+      await api.saveAsTemplate(store.slug, name || null);
+      toast('Guardada como plantilla.');
     } catch (e) { toast(`Error: ${e.message}`, 'err'); }
   });
   // Duplicar la presentación actual (para editarla sin tocar la original).

@@ -35,4 +35,11 @@ export const api = {
   },
 
   assetUrl: (slug, src) => `/api/projects/${slug}/${src}`,
+
+  // ── Plantillas ──
+  listTemplates: () => j('GET', '/api/templates'),
+  getTemplate: (slug) => j('GET', `/api/templates/${slug}`),
+  useTemplate: (slug, name) => j('POST', `/api/templates/${slug}/use`, { name: name || null }),
+  saveAsTemplate: (sourceSlug, name) => j('POST', '/api/templates', { sourceSlug, name: name || null }),
+  deleteTemplate: (slug) => j('DELETE', `/api/templates/${slug}`),
 };

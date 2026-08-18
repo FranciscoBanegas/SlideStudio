@@ -23,6 +23,11 @@ Project
             └── animation (Animation)
 ```
 
+> **Plantillas.** Una plantilla es *estructuralmente* un `Project`: se guarda
+> igual (`project.json` + `assets/`) pero en el directorio `templates/`. El
+> resumen `TemplateSummary` = `ProjectSummary` + `system` (bool) distingue las de
+> sistema de las de usuario. Ver [3 · Backend y API](03-backend-api.md#plantillas--routestemplatespy).
+
 ## Entidades
 
 ### Project

@@ -9,6 +9,7 @@ import { initSlidesPanel } from './editor/slidesPanel.js';
 import { initPropertiesPanel } from './editor/propertiesPanel.js';
 import { initToolbar } from './editor/toolbar.js';
 import { initTimeline } from './editor/timeline.js';
+import { initTemplates } from './editor/templates.js';
 import { initPresent, unitCount } from './present/present.js';
 import { injectKeyframes, primeElement, playElement, clearElement, animEnd } from './anim/animations.js';
 import { animTarget } from './renderer/elements.js';
@@ -84,10 +85,12 @@ async function boot() {
   initPropertiesPanel(previewAnimation);
   initTimeline({ onPlaySlide: playSlide });
   const present = initPresent();
+  const templates = initTemplates({ loadProject, refreshProjectList });
   initToolbar({
     loadProject,
     startPresent: () => present.start(),
     refreshProjectList,
+    openTemplates: () => templates.open(),
   });
 
   try {

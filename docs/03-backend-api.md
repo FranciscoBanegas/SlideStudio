@@ -18,6 +18,20 @@ ejecutar la app.
 | `DELETE` | `/api/projects/{slug}` | — | `{ "ok": true }` |
 | `POST` | `/api/projects/{slug}/slides/duplicate` | `{ "slideId": "..." }` | `Project` actualizado |
 
+### Plantillas — `routes/templates.py`
+
+Las plantillas viven en `templates/` (separadas de `projects/`), con la misma
+estructura (`project.json` + `assets/`). Las de **sistema** llevan un marcador
+`.system` y no son borrables; el resto son de usuario.
+
+| Método | Ruta | Cuerpo | Respuesta |
+|--------|------|--------|-----------|
+| `GET` | `/api/templates` | — | Lista de `TemplateSummary` (= `ProjectSummary` + `system`) |
+| `GET` | `/api/templates/{slug}` | — | `Project` (para previsualizar la miniatura) |
+| `POST` | `/api/templates` | `{ "sourceSlug", "name"? }` | `{ "slug" }` — guarda un proyecto como plantilla de usuario |
+| `POST` | `/api/templates/{slug}/use` | `{ "name"? }` | `{ "slug" }` — crea una **presentación independiente** desde la plantilla (copia con id nuevo) |
+| `DELETE` | `/api/templates/{slug}` | — | `{ "ok": true }` (403 si es de sistema) |
+
 ### Assets — `routes/assets.py`
 
 | Método | Ruta | Notas |
@@ -41,6 +55,11 @@ Es la **única** capa que toca disco. Funciones clave:
 - `save_project(slug, project)` → escritura **atómica** (temp + rename).
 - `create_project(name)` → genera slug único, crea `assets/`.
 - `delete_project(slug)`, `assets_dir(slug)`, `slugify(name)`.
+- **Plantillas**: `list_templates()`, `load_template(slug)`, `save_template(slug, project, system=)`,
+  `create_project_from_template(tpl, name)` (usar plantilla → proyecto nuevo),
+  `create_template_from_project(src, name)` (guardar como plantilla),
+  `delete_template(slug)` (protege las de sistema). Reutilizan el patrón de copia
+  de carpeta de `duplicate_project` con `id` nuevo → independencia total.
 
 Defensa contra *path traversal*: los slugs no pueden contener `/`, `\` ni `..`.
 
@@ -60,8 +79,11 @@ Convierte el deck HTML original en un `Project`:
    completa → **fidelidad 1:1** con el deck original.
 4. Asigna una animación de entrada `fadeIn` por defecto a cada slide.
 
-Se ejecuta una sola vez al arrancar (en `main.py`), sembrando el proyecto de
-ejemplo `tutorial-deshabilitar-root` si no existe.
+Al arrancar (`main.py`) se siembran las **plantillas de sistema**
+(`templates_seed.py`): `por-defecto` (importa el deck original, o cae al proyecto
+de ejemplo, o a un deck mínimo), `portada-minimal` y `secciones`. Si no hay
+ningún proyecto, se crea uno desde la plantilla por defecto para que la app abra
+con contenido. Los proyectos existentes no se tocan.
 
 ## Arranque — `run.py`
 

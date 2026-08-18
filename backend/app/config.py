@@ -16,6 +16,7 @@ REPO_DIR = ROOT_DIR.parent                          # "Tutorial de slides paso a
 
 FRONTEND_DIR = ROOT_DIR / "frontend"
 PROJECTS_DIR = ROOT_DIR / "projects"
+TEMPLATES_DIR = ROOT_DIR / "templates"
 
 # Deck HTML original usado por el importador (queda fuera de slide-studio/).
 SOURCE_DECK_HTML = REPO_DIR / "Tutorial Deshabilitar Root.dc.html"
@@ -31,3 +32,4 @@ PORT = int(os.environ.get("SLIDE_STUDIO_PORT", "8000"))
 def ensure_dirs() -> None:
     """Crea las carpetas base si no existen."""
     PROJECTS_DIR.mkdir(parents=True, exist_ok=True)
+    TEMPLATES_DIR.mkdir(parents=True, exist_ok=True)

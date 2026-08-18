@@ -264,3 +264,10 @@ class ProjectSummary(BaseModel):
     slideCount: int
     width: int
     height: int
+
+
+class TemplateSummary(ProjectSummary):
+    """Resumen de una plantilla. `system` distingue las de sistema (no borrables)
+    de las creadas por el usuario."""
+
+    system: bool = False

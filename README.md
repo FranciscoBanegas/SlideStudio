@@ -8,7 +8,9 @@ presentaciones, las editas visualmente y las reproduces a pantalla completa.
 
 ## Qué puedes hacer
 
-- Crear presentaciones y añadir todas las diapositivas que quieras.
+- Crear presentaciones a partir de **plantillas** (3 de sistema para empezar) y
+  **guardar las tuyas** como plantilla para reutilizarlas.
+- Añadir todas las diapositivas que quieras.
 - Añadir **textos, títulos, imágenes, formas y fondos**, y moverlos o
   redimensionarlos con el ratón.
 - Aplicar **animaciones** (incluida la aparición **letra por letra**) y
